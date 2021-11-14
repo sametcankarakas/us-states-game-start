@@ -17,7 +17,11 @@ data = pandas.read_csv("50_states.csv")
 state_list = data.state.to_list()
 
 while game_is_on:
-    answer_state = screen.textinput(title=f"{counter_str}", prompt="What's another state's name?")
+    answer_state = screen.textinput(title=f"{counter_str}", prompt="What's another state's name?").title()
+    if answer_state == "Exit":
+        remaining_states = pandas.DataFrame(state_list, columns=["States Remaining"])
+        remaining_states.to_csv("Remaining_States.csv", index=True)
+        break
     if answer_state in state_list:
         chosen_state = data[data["state"] == f"{answer_state}"]
         counter += 1
@@ -50,7 +54,3 @@ while game_is_on:
         # state_turtle.penup()
         # state_turtle.goto(x, y)
         # state_turtle.write(f"{answer_state}", align="center")
-
-
-
-screen.exitonclick()
